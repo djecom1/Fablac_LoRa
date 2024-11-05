@@ -22,6 +22,8 @@
  *      - ajout d'une police dans Roboto_Condensed_14 dans la bibliotheque ESP8266_and_ESP32_OLED_driver_for_SSD1306_displays/src/OLEDDisplayFonts.h
  *      - police faite avec http://oleddisplay.squix.ch/
  *      
+ * v0.3   (04/11/2024) Jerome
+ *        Ajout SyncWord 0xFA , CodingRate4 8, SignalBandwidth 125E3, SpreadingFactor 11 , Frequency 869587500
  */
 
 #include <SPI.h>
@@ -222,6 +224,13 @@ void setup() {
     Serial.println("Starting LoRa failed!");
     while (1);
   }
+
+  LoRa.setSyncWord(0xFA);           // ranges from 0-0xFF, default 0x34, see API docs
+//  LoRa.setCodingRate4(8);
+  LoRa.setSignalBandwidth(125E3);
+  LoRa.setSpreadingFactor(11);
+  LoRa.setFrequency(869587500); 
+   
   // LoRa.onReceive(cbk);
   LoRa.receive();
   Serial.println("init ok");

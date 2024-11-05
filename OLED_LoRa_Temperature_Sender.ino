@@ -26,8 +26,10 @@
  *      - Format données émises temp1/temp2?lieu
  * v0.3   (14/05/2024)
  *      - TIME_TO_SLEEP passé à 1800 secondes (30 minutes) pour test batterie
+ * v0.4   4/11/2024 (Jerome)
+ *        Ajout SyncWord 0xFA , CodingRate4 8, SignalBandwidth 125E3, SpreadingFactor 11 , Frequency 869587500
  */
- 
+  
 #include <SPI.h>
 #include <LoRa.h>
 #include <Wire.h>  
@@ -155,6 +157,11 @@ void setup() {
     Serial.println("Starting LoRa failed!");
     while (1);
   }
+  LoRa.setSyncWord(0xFA);           // ranges from 0-0xFF, default 0x34, see API docs
+//  LoRa.setCodingRate4(8);
+  LoRa.setSignalBandwidth(125E3);
+  LoRa.setSpreadingFactor(11);
+  LoRa.setFrequency(869587500); 
   // changes the spreading factor to 12 -> slower speed but better noise immunity
   //LoRa.setSpreadingFactor(12);   // ranges from 6-12, default is 7 
   //LoRa.onReceive(cbk);
